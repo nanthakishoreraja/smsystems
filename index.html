@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM SYSTEMS (SALES & SERVICES) - Products Catalog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-text">SM SYSTEMS (SALES & SERVICES)</span>
+            <span class="contact">Contact: 9486171929, 7598194206</span>
+        </div>
+        <nav class="nav">
+            <a href="login.html" class="nav-btn primary">Staff Login</a>
+        </nav>
+    </header>
+
+    <main class="layout">
+        <section class="catalog-view customer-view view" id="view-catalog">
+            <aside class="filters">
+                <h3>Categories</h3>
+                <ul id="category-list"></ul>
+            </aside>
+            <section class="catalog">
+                <div class="catalog-header">
+                    <input id="search" type="search" placeholder="Search products by name...">
+                </div>
+                <div id="product-grid" class="product-grid"></div>
+            </section>
+        </section>
+    </main>
+
+
+    <template id="tpl-product">
+        <div class="product">
+            <div class="imgwrap"><img></div>
+            <div class="info">
+                <div class="name"></div>
+                <div class="price"></div>
+            </div>
+        </div>
+    </template>
+
+    <script src="customer.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM SYSTEMS (SALES & SERVICES) - Staff Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand"><span class="brand-text">SM SYSTEMS (SALES & SERVICES)</span><span class="contact">Contact: 9486171929, 7598194206</span></div>
+        <nav class="nav">
+            <button class="nav-btn" data-view="catalog">Catalog</button>
+            <button class="nav-btn" data-view="report">Monthly Report</button>
+            <button class="nav-btn" data-view="manage">Manage Menu</button>
+            <button class="nav-btn danger" id="btnLogout">Logout</button>
+        </nav>
+    </header>
+
+    <main class="layout">
+        <section class="catalog-view view" id="view-catalog">
+            <aside class="filters">
+                <h3>Categories</h3>
+                <ul id="category-list"></ul>
+            </aside>
+            <section class="catalog">
+                <div class="catalog-header">
+                    <input id="search" type="search" placeholder="Search products by name...">
+                </div>
+                <div id="product-grid" class="product-grid"></div>
+            </section>
+            <aside class="cart">
+                <h3>Cart</h3>
+                <div id="cart-items"></div>
+                <div class="buyer">
+                    <h4>Invoice To</h4>
+                    <label>Customer Name
+                        <input id="bill-customer" placeholder="Customer name">
+                    </label>
+                    <label>Address
+                        <textarea id="bill-address" rows="3" placeholder="Street, Area, City, PIN"></textarea>
+                    </label>
+                    <label>Phone Number
+                        <input id="bill-phone" type="tel" placeholder="10-digit phone">
+                    </label>
+                </div>
+                <div class="totals">
+                    <div class="row"><span>Subtotal</span><span id="subtotal">0.00</span></div>
+                    <div class="row"><span>Tax (0%)</span><span id="tax">0.00</span></div>
+                    <div class="row grand"><span>Total</span><span id="total">0.00</span></div>
+                </div>
+                <div class="cart-actions">
+                    <button id="btnPayNow" class="primary">Pay Now</button>
+                    <button id="btnPrint">Print Bill</button>
+                    <button id="btnUndo">Undo</button>
+                    <button id="btnClearCart" class="danger">Clear Cart</button>
+                </div>
+            </aside>
+        </section>
+
+        <section class="report-view view hidden" id="view-report">
+            <div class="report-controls">
+                <label>Month:
+                    <input type="month" id="report-month">
+                </label>
+                <button id="btnRefreshReport">Refresh</button>
+                <button id="btnPrintReport">Print Report</button>
+            </div>
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order ID</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="report-tbody"></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="right">Monthly Total</td>
+                        <td id="report-total">0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section class="manage-view view hidden" id="view-manage">
+            <div class="manage-grid">
+                <div class="panel">
+                    <h3>Add / Edit Product</h3>
+                    <form id="product-form">
+                        <input type="hidden" id="product-id">
+                        <label>Name
+                            <input id="product-name" required>
+                        </label>
+                        <label>Category
+                            <select id="product-category" required></select>
+                        </label>
+                        <label>Price
+                            <input id="product-price" type="number" min="0" step="0.01" required>
+                        </label>
+                        <label>Image URL
+                            <input id="product-image" placeholder="https://...">
+                        </label>
+                        <div class="form-actions">
+                            <button type="submit" class="primary" id="btnSaveProduct">Save</button>
+                            <button type="button" id="btnResetForm">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel">
+                    <h3>Products</h3>
+                    <table class="manage-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="manage-products"></tbody>
+                    </table>
+                </div>
+                <div class="panel">
+                    <h3>Categories</h3>
+                    <form id="category-form" class="inline">
+                        <input id="category-name" placeholder="New category" required>
+                        <button class="primary" type="submit">Add</button>
+                    </form>
+                    <ul id="manage-categories" class="chips"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal hidden" id="qr-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pay Now</h3>
+                <button id="qr-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="qr-grid">
+                    <div>
+                        <label>Amount
+                            <input id="qr-amount" type="number" min="0" step="0.01">
+                        </label>
+                        <label>Note
+                            <input id="qr-note" placeholder="Invoice note">
+                        </label>
+                        <label>UPI / URL
+                            <input id="qr-target" placeholder="upi://pay?pa=your@upi&pn=Showroom">
+                        </label>
+                        <button id="qr-generate" class="primary">Generate QR</button>
+                    </div>
+                    <div class="qr-preview">
+                        <img id="qr-image" alt="QR will appear here">
+                        <div class="qr-amount" id="qr-amount-label"></div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="qr-mark-paid" class="success">Mark as Paid</button>
+                    <button id="qr-print" class="secondary">Print Bill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="tpl-product">
+        <div class="product">
+            <div class="imgwrap"><img></div>
+            <div class="info">
+                <div class="name"></div>
+                <div class="price"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-cart-item">
+        <div class="cart-item">
+            <div class="ci-name"></div>
+            <div class="ci-qty">
+                <button class="dec">−</button>
+                <input class="qty" type="number" min="1">
+                <button class="inc">+</button>
+            </div>
+            <div class="ci-price"></div>
+            <button class="remove">×</button>
+        </div>
+    </template>
+
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+    <script>
+      // Check authentication
+      if (!requireAuth()) {
+        // Redirect will happen in requireAuth
+      }
+
+      // Logout button
+      document.getElementById('btnLogout').addEventListener('click', logout);
+
+      // Simple nav
+      document.querySelectorAll('.nav-btn:not(#btnLogout)').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-view');
+          document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+          document.getElementById(`view-${target}`).classList.remove('hidden');
+        });
+      });
+    </script>
+</body>
+</html>
+
+
