@@ -12,7 +12,7 @@
         <nav class="nav">
             <button class="nav-btn" data-view="catalog">Catalog</button>
             <button class="nav-btn" data-view="report">Monthly Report</button>
-            <button class="nav-btn" data-view="manage">Manage Menu</button>
+            <button class="nav-btn" data-view="manage">Manage Products</button>
             <button class="nav-btn danger" id="btnLogout">Logout</button>
         </nav>
     </header>
@@ -199,8 +199,12 @@
         // Redirect will happen in requireAuth
       }
 
-      // Logout button
-      document.getElementById('btnLogout').addEventListener('click', logout);
+      // Logout button (confirm + redirect to customer view)
+      document.getElementById('btnLogout').addEventListener('click', () => {
+        const ok = confirm('Are you sure you want to logout?');
+        if (!ok) return;
+        logout('index.html');
+      });
 
       // Simple nav
       document.querySelectorAll('.nav-btn:not(#btnLogout)').forEach(btn => {

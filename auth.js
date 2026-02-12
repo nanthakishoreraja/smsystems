@@ -14,9 +14,9 @@ function login(username, password) {
   return false;
 }
 
-function logout() {
+function logout(redirectTo = 'login.html') {
   localStorage.removeItem(AUTH_KEY);
-  window.location.href = 'login.html';
+  window.location.href = redirectTo;
 }
 
 function isAuthenticated() {
