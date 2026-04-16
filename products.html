@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM SYSTEMS - Products</title>
+    <link rel="icon" href="SM LOGO.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-animation" aria-hidden="true"></div>
+    <header class="topbar">
+        <div class="brand">
+            <img src="SM LOGO.png" alt="SM Systems" class="brand-logo">
+            <span class="brand-text">SM SYSTEMS</span>
+            <nav class="brand-nav">
+                <a href="index.html" class="brand-link">Home</a>
+                <a href="products.html" class="brand-link active">Products</a>
+                <a href="about.html" class="brand-link">About</a>
+            </nav>
+            <span class="contact">Contact: 9486171929, 8754696009</span>
+        </div>
+        <nav class="nav">
+            <a href="login.html" class="nav-btn primary">Staff Login</a>
+        </nav>
+    </header>
+
+    <main class="layout">
+        <section class="catalog-view customer-view view" id="view-catalog">
+            <aside class="filters">
+                <h3>Categories</h3>
+                <ul id="category-list"></ul>
+            </aside>
+            <section class="catalog">
+                <div class="catalog-header">
+                    <input id="search" type="search" placeholder="Search products by name...">
+                </div>
+                <div id="product-grid" class="product-grid"></div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 SM SYSTEMS. All rights reserved.</p>
+        <p class="footer-credit">Designed by SM SYSTEMS (IT WING)</p>
+    </footer>
+
+    <template id="tpl-product">
+        <div class="product">
+            <div class="imgwrap"><img></div>
+            <div class="info">
+                <div class="name"></div>
+                <div class="price"></div>
+            </div>
+        </div>
+    </template>
+
+    <script src="customer.js"></script>
+</body>
+</html>
